@@ -8,24 +8,18 @@
     "test": "tests"
   },
   "scripts": {
-    "dev": "concurrently --names \"ROLLUP,HTTP\" -c \"bgBlue.bold,bgGreen.bold\" \"rollup -c -w -m inline\" \"serve --port 8080\"",
-    "build": "rollup -c && rollup -c rollup.config.min.js",
-    "build-docs": "jsdoc2md -f src/dat/gui/GUI.js src/dat/controllers/Controller.js src/dat/controllers/NumberController.js | replace-between --target API.md --token API",
-    "lint": "eslint src",
-    "preversion": "npm run lint",
-    "version": "npm run build && git add -A build",
-    "postversion": "git push && git push --tags && npm publish"
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dataarts/dat.gui.git"
+    "url": "git+https://github.com/anhr/customController"
   },
-  "author": "Data Arts Team, Google",
+  "author": "Andrej Hristoliubov https://anhr.github.io/AboutMe/",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/dataarts/dat.gui/issues"
+    "url": "https://github.com/anhr/customController/issues"
   },
-  "homepage": "https://github.com/dataarts/dat.gui#readme",
+  "homepage": "https://github.com/anhr/customController#readme",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
