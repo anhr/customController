@@ -12,7 +12,7 @@ In your `head` tag, include the following code:
 <script type="text/javascript" src="customcontrollers.js"></script>
 ```
 
-No you can use customcontrollers object for access to two custom controllers:
+Now you can use customcontrollers object for access to two custom controllers:
 
 ```
 customcontrollers.KnobController - class KnobController.
