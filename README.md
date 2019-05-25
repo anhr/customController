@@ -14,8 +14,10 @@ In your `head` tag, include the following code:
 
 No you can use customcontrollers object for access to two custom controllers:
 
-customcontrollers.KnobController - class KnobController
-customcontrollers.PlayController - class PlayController
+```
+customcontrollers.KnobController - class KnobController.
+customcontrollers.PlayController - class PlayController.
+```
 
 [Example](https://raw.githack.com/anhr/three.js/dev/examples/webgl_custom_controller.html) of using:
 
