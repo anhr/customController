@@ -1,6 +1,6 @@
 /**
  * Example of using of the dat.gui controllers.CustomController
- * http://code.google.com/p/dat-gui
+ * https://github.com/anhr/dat.gui
  *
  * Copyright 2011 Data Arts Team, Google Creative Lab
  *

@@ -16,7 +16,6 @@ import path from 'path';
 import resolve from 'rollup-plugin-node-resolve';
 import cleanup from 'rollup-plugin-cleanup';
 import babel from 'rollup-plugin-babel';
-//import sass from 'rollup-plugin-sass';
 
 const banner = fs.readFileSync(path.join(__dirname, 'licenseBanner.txt'));
 
