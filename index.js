@@ -17,7 +17,6 @@ export class PlayController extends controllers.CustomController {
 	constructor(object, property) {
 		super(object, property);
 	}
-	// ...
 }
 
 export class KnobController extends controllers.CustomController {
@@ -36,5 +35,4 @@ export class KnobController extends controllers.CustomController {
 		});
 
 	}
-	// ...
 }

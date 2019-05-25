@@ -21,66 +21,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
 };
 
-
-
-
-
-
-
-
-
-
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-
-
-
-
-
-
-
-
-
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-
-
-
-
-
-
-
-
-
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
-
 function ___$insertStyle(css) {
   if (!css) {
     return;
@@ -2517,28 +2457,22 @@ var controllers = {
   CustomController: CustomController
 };
 
-var PlayController = function (_controllers$CustomCo) {
-	inherits(PlayController, _controllers$CustomCo);
-	function PlayController(object, property) {
-		classCallCheck(this, PlayController);
-		return possibleConstructorReturn(this, (PlayController.__proto__ || Object.getPrototypeOf(PlayController)).call(this, object, property));
+class PlayController extends controllers.CustomController {
+	constructor(object, property) {
+		super(object, property);
 	}
-	return PlayController;
-}(controllers.CustomController);
-var KnobController = function (_controllers$CustomCo2) {
-	inherits(KnobController, _controllers$CustomCo2);
-	function KnobController(addButton, a, b) {
-		classCallCheck(this, KnobController);
-		return possibleConstructorReturn(this, (KnobController.__proto__ || Object.getPrototypeOf(KnobController)).call(this, {
-			constructor: function constructor(controller) {
+}
+class KnobController extends controllers.CustomController {
+	constructor(addButton, a, b) {
+		super({
+			constructor: function (controller) {
 				addButton(controller, 'Knob Controller', 'Please press knob', function (value) {
 					alert('Knob Controller ' + (a + b));
 				});
 			}
-		}));
+		});
 	}
-	return KnobController;
-}(controllers.CustomController);
+}
 
 exports.PlayController = PlayController;
 exports.KnobController = KnobController;

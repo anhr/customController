@@ -1,7 +1,7 @@
 {
   "name": "customcontroller",
   "version": "0.1.0",
-  "description": "custom controller for dat.gui.",
+  "description": "Example of using of the dat.gui controllers.CustomController in your ES module.",
   "main": "build/customcontroller.js",
   "module": "build/customcontroller.module.js",
   "directories": {

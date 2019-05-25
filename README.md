@@ -1,40 +1,22 @@
 # customController
-Example of using of the dat.gui controllers.CustomController.
+Example of using of the dat.gui controllers.CustomController in your ES module.
 
 
 ## Packaged Builds
-The easiest way to use dat.GUI in your code is by using the built source at `build/dat.gui.min.js`. These built JavaScript files bundle all the necessary dependencies to run dat.GUI.
+The easiest way to use customController in your code is by using the built source at `build/customcontrollers.js`. These built JavaScript files bundle all the necessary dependencies to run customController.
 
 In your `head` tag, include the following code:
 ```html
-<script type="text/javascript" src="dat.gui.min.js"></script>
-```
-
-## Installing from npm
-
-```bash
-$ npm install --save dat.gui
-```
-
-```js
-// CommonJS:
-const dat = require('dat.gui');
-
-// ES6:
-import * as dat from 'dat.gui';
-
-const gui = new dat.GUI();
+<script type="text/javascript" src="customcontrollers.js"></script>
 ```
 
 ## Directory Contents
 
 ```
-├── build - Compiled source code.
-├── src - Source files.
-└── tests - Tests.
+└── build - Compiled source code.
 ```
 
-## Building your own dat.GUI
+## Building your own customController
 
 In the terminal, enter the following:
 
@@ -46,18 +28,8 @@ $ npm run build
 ## npm scripts
 
 - npm run build - Build development and production version of scripts.
-- npm run dev - Build development version of script and watch for changes.
-
-
-## Working with Content Security Policy
-If you're using a server with a Content Security Policy in place that blocks 'unsafe-inline', you will have problems when dat.gui.js tries to inject style information. To get around this, load 'build/dat.gui.css' as an external style sheet.
-
-## Changes
-View the [Change Log](CHANGELOG.md)
 
 ## Thanks
-The following libraries / open-source projects were used in the development of dat.GUI:
+The following libraries / open-source projects were used in the development of customController:
  * [Rollup](https://rollupjs.org)
- * [Sass](http://sass-lang.com/)
  * [Node.js](http://nodejs.org/)
- * [QUnit](https://github.com/jquery/qunit) / [jquery](http://jquery.com/)
