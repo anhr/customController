@@ -23,6 +23,19 @@ customcontrollers.PlayController - class PlayController.
 
 ```
 	var gui = new dat.GUI();
+
+
+	gui.add( new customcontrollers.PlayController( {
+
+		constructor: function ( controller ) {
+
+			//Add your custom elements into controller.domElement
+
+		},
+
+	} ) );
+
+	//Extension version of using of customcontrollers.PlayController. The NumberControllerSlider was added into controllerPlay also.
 	var controllerPlay = gui.add( new customcontrollers.PlayController( {
 
 		constructor: function ( controller ) {
@@ -38,20 +51,10 @@ customcontrollers.PlayController - class PlayController.
 
 	}, 'playRate', 1, 25, 1 ).onChange( function ( value ) {
 
-		//...
+		//User has changed the NumberControllerSlider value
 
 	} );
 	controllerPlay.domElement.title = 'Rate of changing of 3D obects per second.';
-
-	gui.add( new customcontrollers.PlayController( {
-
-		constructor: function ( controller ) {
-
-			//Add your custom elements into controller.domElement
-
-		},
-
-	} ) );
 
 	gui.add( new customcontrollers.KnobController( function(){
 	
