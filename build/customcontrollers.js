@@ -1476,10 +1476,10 @@ function hueGradient(elem) {
 }
 var CustomController = function (_Controller) {
   inherits$1(CustomController, _Controller);
-  function CustomController(object, property) {
+  function CustomController(init) {
     classCallCheck$1(this, CustomController);
-    var _this = possibleConstructorReturn$1(this, (CustomController.__proto__ || Object.getPrototypeOf(CustomController)).call(this, object, property));
-    object.constructor(_this);
+    var _this = possibleConstructorReturn$1(this, (CustomController.__proto__ || Object.getPrototypeOf(CustomController)).call(this, {}));
+    init(_this);
     _this.custom = true;
     return _this;
   }
@@ -2457,25 +2457,32 @@ var controllers = {
   CustomController: CustomController
 };
 
-class PlayController extends controllers.CustomController {
-	constructor(object, property) {
-		super(object, property);
+class KnobController extends controllers.CustomController {
+	constructor(a, b) {
+		super(function (controller) {
+			var button = document.createElement('span');
+			button.innerHTML = 'Knob Controller';
+			button.title = 'Please press knob';
+			button.style.cursor = 'pointer';
+			button.style.margin = '0px 2px';
+			button.onclick = function (value) {
+				alert('Knob Controller ' + (knobController.a + knobController.b));
+			};
+			controller.domElement.appendChild(button);
+		});
+		this.a = a;
+		this.b = b;
+		var knobController = this;
 	}
 }
-class KnobController extends controllers.CustomController {
-	constructor(addButton, a, b) {
-		super({
-			constructor: function (controller) {
-				addButton(controller, 'Knob Controller', 'Please press knob', function (value) {
-					alert('Knob Controller ' + (a + b));
-				});
-			}
-		});
+class PlayController extends controllers.CustomController {
+	constructor(init) {
+		super(init);
 	}
 }
 
-exports.PlayController = PlayController;
 exports.KnobController = KnobController;
+exports.PlayController = PlayController;
 
 Object.defineProperty(exports, '__esModule', { value: true });
 

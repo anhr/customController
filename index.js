@@ -13,26 +13,32 @@
 
 import { GUI, controllers } from '../../dat.gui';
 
-export class PlayController extends controllers.CustomController {
-	constructor(object, property) {
-		super(object, property);
+export class KnobController extends controllers.CustomController {
+	constructor( a, b ) {
+		super(function (controller) {
+
+			var button = document.createElement('span');
+			button.innerHTML = 'Knob Controller';
+			button.title = 'Please press knob';
+			button.style.cursor = 'pointer';
+			button.style.margin = '0px 2px';
+			button.onclick = function (value) {
+
+				alert('Knob Controller ' + ( knobController.a + knobController.b ));
+
+			}
+			controller.domElement.appendChild(button);
+
+		});
+		this.a = a;
+		this.b = b;
+		var knobController = this;
+
 	}
 }
 
-export class KnobController extends controllers.CustomController {
-	constructor(addButton, a, b ) {
-		super({
-
-			constructor: function (controller) {
-
-				addButton(controller, 'Knob Controller', 'Please press knob', function (value) {
-
-					alert('Knob Controller ' + (a + b));
-
-				});
-			},
-
-		});
-
+export class PlayController extends controllers.CustomController {
+	constructor(  init ) {
+		super( init );
 	}
 }
