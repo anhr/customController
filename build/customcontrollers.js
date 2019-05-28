@@ -1891,9 +1891,8 @@ Common.extend(GUI.prototype, {
       color: true
     });
   },
-  addCustomController: function addCustomController(object, property) {
-    return _add(this, object, property, {
-      custom: true,
+  addCustomController: function addCustomController(init, property) {
+    return _add(this, new dat.controllers.CustomController(init), property, {
       factoryArgs: Array.prototype.slice.call(arguments, 2)
     });
   },
@@ -2251,8 +2250,6 @@ function _add(gui, object, property, params) {
     controller = new ColorController(object, property);
   } else if (customObject && property === undefined) {
     controller = object;
-  } else if (!customObject && params.custom && object[property] === undefined) {
-    controller = new CustomController(object, property);
   } else {
     var factoryArgs = customObject ? [property].concat(params.factoryArgs) : [object, property].concat(params.factoryArgs);
     controller = ControllerFactory.apply(gui, factoryArgs);
@@ -2263,8 +2260,8 @@ function _add(gui, object, property, params) {
   recallSavedValue(gui, controller);
   dom.addClass(controller.domElement, 'c');
   var container = document.createElement('div');
-  var name = params.custom && controller instanceof CustomController === false ? customObject ? object.domElement : new CustomController(object).domElement : document.createElement('span');
-  if (!params.custom) name.innerHTML = controller.property;
+  var name = customObject ? object.domElement : document.createElement('span');
+  if (!customObject) name.innerHTML = controller.property;
   dom.addClass(name, 'property-name');
   container.appendChild(name);
   container.appendChild(controller.domElement);
