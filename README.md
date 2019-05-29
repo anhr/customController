@@ -31,7 +31,8 @@ customcontrollers.PlayController - class PlayController.
 
 	} ) );
 
-	//Example of extension version of using of customcontrollers.PlayController. The NumberControllerSlider was added into customcontrollers.PlayController also.
+	//Example of extension version of using of customcontrollers.PlayController.
+	//The NumberControllerSlider was added into customcontrollers.PlayController also.
 	// gui.add function returns NumberControllerSlider.
 	var controllerPlay = gui.add( new customcontrollers.PlayController(  function ( controller ) {
 
@@ -51,7 +52,8 @@ customcontrollers.PlayController - class PlayController.
 
 	gui.add( new customcontrollers.KnobController( 1, 2 ) );
 
-	//Example of extension version of using of customcontrollers.KnobController. The NumberControllerSlider was added into customcontrollers.KnobController also.
+	//Example of extension version of using of customcontrollers.KnobController.
+	//The NumberControllerSlider was added into customcontrollers.KnobController also.
 	// gui.add function returns NumberControllerSlider.
 	var controllerKnob = folder3.add( new customcontrollers.KnobController( 3, 4 ), {
 
