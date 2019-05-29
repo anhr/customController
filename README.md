@@ -9,7 +9,7 @@ The easiest way to use customController in your code is by using the built sourc
 
 In your `head` tag, include the following code:
 ```html
-<script type="text/javascript" src="customcontrollers.js"></script>
+<script src="https://raw.githack.com/anhr/customController/master/build/customcontrollers.js"></script>
 ```
 
 Now you can use customcontrollers object for access to two custom controllers:
