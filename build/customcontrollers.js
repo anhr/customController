@@ -1,6 +1,7 @@
 /**
  * JavaScript Custom comtroller for dat-gui Controller Library
  * https://github.com/anhr/customController
+ * @author Andrej Hristoliubov https://anhr.github.io/AboutMe/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

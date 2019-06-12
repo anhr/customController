@@ -33,6 +33,7 @@
     <Content Include="licenseBanner.txt" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="URL.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="index.js" />
