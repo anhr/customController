@@ -14,6 +14,14 @@
 
 import { GUI, controllers } from '../../dat.gui';
 
+/**
+ * @class Example of subtype of CustomController class.
+ *
+ * @extends dat.controllers.CustomController
+ *
+ * @param {number} a
+ * @param {number} b
+ */
 export class KnobController extends controllers.CustomController {
 	constructor( a, b ) {
 		super(function (controller) {
