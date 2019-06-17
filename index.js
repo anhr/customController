@@ -73,7 +73,6 @@ export class PlayController extends controllers.CustomController {
 			property: init,
 
 		}, 'playRate', 1, 25, 1 );
-		//		this.property = init();
 		if ( this.property === undefined )
 			console.error( 'init() returns ' + this.property );
 	}
@@ -92,7 +91,6 @@ export class PrevAndNextController extends controllers.CustomController {
 		super( {
 			property: init,
 		} );
-		//		this.property = init();
 		if ( this.property === undefined )
 			console.error( ' init() returns ' + this.property );
 	}
