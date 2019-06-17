@@ -21,41 +21,79 @@ import { GUI, controllers } from '../../dat.gui';
  *
  * @param {Object} object The object to be manipulated
  * @param {string} property The name of the property to be manipulated
- * @param {Object} [params] Optional parameters
+ * @param {number} a
+ * @param {number} b
  */
 export class KnobController extends controllers.CustomController {
-	constructor( object, property, ...opts ) {
-		super( object, property, opts );
+	constructor( object, property, a, b ) {
+		super( object, property );
+
 		// ... set up options if needed
+
+		const _this = this;
+
+		//input element
+		this.__input = document.createElement( 'input' );
+		this.__input.setAttribute( 'type', 'number' );
+		this.__input.style.width = '40%';
+		this.updateDisplay();
+		this.domElement.appendChild( this.__input );
+
+		//button element
+		var button = document.createElement( 'input' );
+		button.setAttribute( 'type', 'button' );
+		button.value = 'Set ' + property;
+		button.style.width = '50%';
+		button.onclick = function ( e ) {
+			object[property] = a + b;
+			_this.updateDisplay();
+		}
+		this.domElement.appendChild( button );
+	}
+
+	updateDisplay() {
+		this.__input.value = this.getValue();
 	}
 }
-/*
-export class KnobController extends controllers.CustomController {
-	constructor( a, b ) {
-		super(function (controller) {
 
-			var button = document.createElement('span');
-			button.innerHTML = 'Knob Controller';
-			button.title = 'Please press knob';
-			button.style.cursor = 'pointer';
-			button.style.margin = '0px 2px';
-			button.onclick = function (value) {
-
-				alert('Knob Controller ' + ( knobController.a + knobController.b ));
-
-			}
-			controller.domElement.appendChild(button);
-
-		});
-		this.a = a;
-		this.b = b;
-		var knobController = this;
-
-	}
-}
-*/
+/**
+ * @class Example of subtype of CustomController class.
+ * Periodically changes the selected 3D object.
+ * Adds NumberControllerSlider controller into PlayController for changing of the rate of changing of 3D obects per second.
+ *
+ * @extends dat.controllers.CustomController
+ *
+ * @param {Function} init Returns an object with elements for adding into "property-name" class element.
+ */
 export class PlayController extends controllers.CustomController {
-	constructor(  init ) {
-		super( init );
+	constructor( init ) {
+		super( {
+
+			playRate: 1,//Default play rate is 1 changes per second
+			property: init,
+
+		}, 'playRate', 1, 25, 1 );
+//		this.property = init();
+		if ( this.property === undefined )
+			console.error( 'init() returns ' + this.property );
+	}
+}
+
+/**
+ * @class Example of subtype of CustomController class.
+ * Selects previous or next 3D object
+ *
+ * @extends dat.controllers.CustomController
+ *
+ * @param {Function} init Returns an object with elements for adding into "property-name" class element.
+ */
+export class PrevAndNextController extends controllers.CustomController {
+	constructor( init ) {
+		super( {
+			property: init,
+		} );
+//		this.property = init();
+		if ( this.property === undefined )
+			console.error( ' init() returns ' + this.property );
 	}
 }
