@@ -1,6 +1,7 @@
 /**
  * JavaScript Custom comtroller for dat-gui Controller Library
  * https://github.com/anhr/customController
+ * @author Andrej Hristoliubov https://anhr.github.io/AboutMe/
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,66 +14,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   return typeof obj;
 } : function (obj) {
   return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-
-
-
-
-
-
-
-
-
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-
-
-
-
-
-
-
-
-
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-
-
-
-
-
-
-
-
-
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
 };
 
 function ___$insertStyle(css) {
@@ -1528,38 +1469,6 @@ function hueGradient(elem) {
   elem.style.cssText += 'background: -ms-linear-gradient(top,  #ff0000 0%,#ff00ff 17%,#0000ff 34%,#00ffff 50%,#00ff00 67%,#ffff00 84%,#ff0000 100%);';
   elem.style.cssText += 'background: linear-gradient(top,  #ff0000 0%,#ff00ff 17%,#0000ff 34%,#00ffff 50%,#00ff00 67%,#ffff00 84%,#ff0000 100%);';
 }
-var CustomController = function (_Controller) {
-  inherits$1(CustomController, _Controller);
-  function CustomController(object, property) {
-    classCallCheck$1(this, CustomController);
-    var _this = possibleConstructorReturn$1(this, (CustomController.__proto__ || Object.getPrototypeOf(CustomController)).call(this, object, property));
-    object.constructor(_this);
-    _this.custom = true;
-    return _this;
-  }
-  return CustomController;
-}(Controller);
-var css = {
-  load: function load(url, indoc) {
-    var doc = indoc || document;
-    var link = doc.createElement('link');
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-    link.href = url;
-    doc.getElementsByTagName('head')[0].appendChild(link);
-  },
-  inject: function inject(cssContent, indoc) {
-    var doc = indoc || document;
-    var injected = document.createElement('style');
-    injected.type = 'text/css';
-    injected.innerHTML = cssContent;
-    var head = doc.getElementsByTagName('head')[0];
-    try {
-      head.appendChild(injected);
-    } catch (e) {}
-  }
-};
-var saveDialogContents = "<div id=\"dg-save\" class=\"dg dialogue\">\n\n  Here's the new load parameter for your <code>GUI</code>'s constructor:\n\n  <textarea id=\"dg-new-constructor\"></textarea>\n\n  <div id=\"dg-save-locally\">\n\n    <input id=\"dg-local-storage\" type=\"checkbox\"/> Automatically save\n    values to <code>localStorage</code> on exit.\n\n    <div id=\"dg-local-explain\">The values saved to <code>localStorage</code> will\n      override those passed to <code>dat.GUI</code>'s constructor. This makes it\n      easier to work incrementally, but <code>localStorage</code> is fragile,\n      and your friends may not see the same values you do.\n\n    </div>\n\n  </div>\n\n</div>";
 var ControllerFactory = function ControllerFactory(object, property) {
   var initialValue = object[property];
   if (Common.isArray(arguments[2]) || Common.isObject(arguments[2])) {
@@ -1588,6 +1497,40 @@ var ControllerFactory = function ControllerFactory(object, property) {
   }
   return null;
 };
+var CustomController = function (_Controller) {
+  inherits$1(CustomController, _Controller);
+  function CustomController(object, property) {
+    classCallCheck$1(this, CustomController);
+    var _this = possibleConstructorReturn$1(this, (CustomController.__proto__ || Object.getPrototypeOf(CustomController)).call(this, object, property));
+    _this.arguments = {
+      object: object, property: property, opts: Array.prototype.slice.call(arguments, 2)
+    };
+    if (object.property) _this.property = object.property();
+    return _this;
+  }
+  return CustomController;
+}(Controller);
+var css = {
+  load: function load(url, indoc) {
+    var doc = indoc || document;
+    var link = doc.createElement('link');
+    link.type = 'text/css';
+    link.rel = 'stylesheet';
+    link.href = url;
+    doc.getElementsByTagName('head')[0].appendChild(link);
+  },
+  inject: function inject(cssContent, indoc) {
+    var doc = indoc || document;
+    var injected = document.createElement('style');
+    injected.type = 'text/css';
+    injected.innerHTML = cssContent;
+    var head = doc.getElementsByTagName('head')[0];
+    try {
+      head.appendChild(injected);
+    } catch (e) {}
+  }
+};
+var saveDialogContents = "<div id=\"dg-save\" class=\"dg dialogue\">\n\n  Here's the new load parameter for your <code>GUI</code>'s constructor:\n\n  <textarea id=\"dg-new-constructor\"></textarea>\n\n  <div id=\"dg-save-locally\">\n\n    <input id=\"dg-local-storage\" type=\"checkbox\"/> Automatically save\n    values to <code>localStorage</code> on exit.\n\n    <div id=\"dg-local-explain\">The values saved to <code>localStorage</code> will\n      override those passed to <code>dat.GUI</code>'s constructor. This makes it\n      easier to work incrementally, but <code>localStorage</code> is fragile,\n      and your friends may not see the same values you do.\n\n    </div>\n\n  </div>\n\n</div>";
 function requestAnimationFrame(callback) {
   setTimeout(callback, 1000 / 60);
 }
@@ -1936,19 +1879,12 @@ dom.bind(window, 'keydown', GUI._keydownHandler, false);
 Common.extend(GUI.prototype, {
   add: function add(object, property) {
     return _add(this, object, property, {
-      custom: object.custom,
       factoryArgs: Array.prototype.slice.call(arguments, 2)
     });
   },
   addColor: function addColor(object, property) {
     return _add(this, object, property, {
       color: true
-    });
-  },
-  addCustomController: function addCustomController(object, property) {
-    return _add(this, object, property, {
-      custom: true,
-      factoryArgs: Array.prototype.slice.call(arguments, 2)
     });
   },
   remove: function remove(controller) {
@@ -2296,30 +2232,41 @@ function recallSavedValue(gui, controller) {
   }
 }
 function _add(gui, object, property, params) {
-  var customObject = object.custom;
-  if (!customObject && !params.custom && object[property] === undefined) {
+  var customObject;
+  if (object.arguments) {
+    customObject = object;
+    object = customObject.arguments.object;
+    property = customObject.arguments.property;
+    params = {
+      factoryArgs: customObject.arguments.opts
+    };
+  }
+  if (customObject === undefined && object[property] === undefined) {
     throw new Error('Object "' + object + '" has no property "' + property + '"');
   }
   var controller = void 0;
   if (params.color) {
     controller = new ColorController(object, property);
-  } else if (customObject && property === undefined) {
-    controller = object;
-  } else if (!customObject && params.custom && object[property] === undefined) {
-    controller = new CustomController(object, property);
+  } else if (customObject !== undefined && typeof customObject.property === "string") {
+    controller = customObject;
   } else {
-    var factoryArgs = customObject ? [property].concat(params.factoryArgs) : [object, property].concat(params.factoryArgs);
+    var factoryArgs = [object, property].concat(params.factoryArgs);
     controller = ControllerFactory.apply(gui, factoryArgs);
   }
+  if (controller === null) controller = customObject;
   if (params.before instanceof Controller) {
     params.before = params.before.__li;
   }
   recallSavedValue(gui, controller);
   dom.addClass(controller.domElement, 'c');
-  var container = document.createElement('div');
-  var name = params.custom && controller instanceof CustomController === false ? customObject ? object.domElement : new CustomController(object).domElement : document.createElement('span');
-  if (!params.custom) name.innerHTML = controller.property;
+  var name = document.createElement('span');
   dom.addClass(name, 'property-name');
+  if (customObject !== undefined && _typeof$1(customObject.property) === "object") {
+    for (var propertyName in customObject.property) {
+      name.appendChild(customObject.property[propertyName]);
+    }
+  } else name.innerHTML = controller.property;
+  var container = document.createElement('div');
   container.appendChild(name);
   container.appendChild(controller.domElement);
   var li = addRow(gui, container, params.before);
@@ -2511,28 +2458,46 @@ var controllers = {
   CustomController: CustomController
 };
 
-var PlayController = function (_controllers$CustomCo) {
-	inherits(PlayController, _controllers$CustomCo);
-	function PlayController(object, property) {
-		classCallCheck(this, PlayController);
-		return possibleConstructorReturn(this, (PlayController.__proto__ || Object.getPrototypeOf(PlayController)).call(this, object, property));
+class KnobController extends controllers.CustomController {
+	constructor(object, property, a, b) {
+		super(object, property);
+		const _this = this;
+		this.__input = document.createElement('input');
+		this.__input.setAttribute('type', 'number');
+		this.__input.style.width = '40%';
+		this.updateDisplay();
+		this.domElement.appendChild(this.__input);
+		var button = document.createElement('input');
+		button.setAttribute('type', 'button');
+		button.value = 'Set ' + property;
+		button.style.width = '50%';
+		button.onclick = function (e) {
+			object[property] = a + b;
+			_this.updateDisplay();
+		};
+		this.domElement.appendChild(button);
 	}
-	return PlayController;
-}(controllers.CustomController);
-var KnobController = function (_controllers$CustomCo2) {
-	inherits(KnobController, _controllers$CustomCo2);
-	function KnobController(addButton, a, b) {
-		classCallCheck(this, KnobController);
-		return possibleConstructorReturn(this, (KnobController.__proto__ || Object.getPrototypeOf(KnobController)).call(this, {
-			constructor: function constructor(controller) {
-				addButton(controller, 'Knob Controller', 'Please press knob', function (value) {
-					alert('Knob Controller ' + (a + b));
-				});
-			}
-		}));
+	updateDisplay() {
+		this.__input.value = this.getValue();
 	}
-	return KnobController;
-}(controllers.CustomController);
+}
+class PlayController extends controllers.CustomController {
+	constructor(init) {
+		super({
+			playRate: 1,
+			property: init
+		}, 'playRate', 1, 25, 1);
+		if (this.property === undefined) console.error('init() returns ' + this.property);
+	}
+}
+class PrevAndNextController extends controllers.CustomController {
+	constructor(init) {
+		super({
+			property: init
+		});
+		if (this.property === undefined) console.error(' init() returns ' + this.property);
+	}
+}
 
-export { PlayController, KnobController };
+export { KnobController, PlayController, PrevAndNextController };
 //# sourceMappingURL=customcontrollers.module.js.map
