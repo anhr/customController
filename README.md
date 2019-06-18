@@ -129,6 +129,3 @@ $ npm run build
 The following libraries / open-source projects were used in the development of customController:
  * [Rollup](https://rollupjs.org)
  * [Node.js](http://nodejs.org/)
-
- ## Have a job for me?
-Please read [About Me](https://anhr.github.io/AboutMe/).
