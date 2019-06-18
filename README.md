@@ -12,11 +12,15 @@ In your `head` tag, include the following code:
 <script src="https://raw.githack.com/anhr/customController/master/build/customcontrollers.js"></script>
 ```
 
-Now you can use customcontrollers object for access to two custom controllers:
+Now you can use customcontrollers object for access to custom controllers:
 
 ```
-customcontrollers.KnobController - class KnobController.
-customcontrollers.PlayController - class PlayController.
+customcontrollers.KnobController - Example of subtype of CustomController class.
+customcontrollers.PlayController - Example of subtype of CustomController class.
+ * Periodically changes the selected 3D object.
+ * Adds NumberControllerSlider controller into PlayController for changing of the rate of changing of 3D obects per second.
+customcontrollers.PrevAndNextController - Example of subtype of CustomController class.
+ * Selects previous or next 3D object.
 ```
 
 [Example](https://raw.githack.com/anhr/three.js/dev/examples/webgl_custom_controller.html) of using:
@@ -24,46 +28,80 @@ customcontrollers.PlayController - class PlayController.
 ```
 	var gui = new dat.GUI();
 
+	const api = {
 
-	gui.add( new customcontrollers.PlayController( function ( controller ) {
+		color: '#ffffff',
+		value: 0.5,
 
-			//Add your custom elements into controller.domElement
+	};
+
+	gui.add( api, 'color' );
+
+	//KnobController
+	gui.add( new customcontrollers.KnobController( api, 'value', 0.5, 25 ) );
+
+	function addButton( innerHTML, title, onclick ) {
+
+		var button = document.createElement( 'span' );
+		button.innerHTML = innerHTML;
+		button.title = title;
+		button.style.cursor = 'pointer';
+		button.style.margin = '0px 2px';
+		button.onclick = onclick;
+		return button;
+
+	}
+
+	//PlayController
+	var controllerPlayRate = gui.add( new customcontrollers.PlayController( function () {
+
+		buttons = {},
+
+		//Play button
+		buttons.buttonPlay = addButton( '►', 'Animate of 3D object', function ( value ) {
+
+			console.log('Play event');
+
+		} );
+
+		//Repeat button
+		buttons.buttonRepeat = addButton( '⥀', 'Turn repeat on', function ( value ) {
+
+			console.log('Repeat event');
+
+		} );
+
+		return buttons;
+
+	} ) ).onChange( function ( value ) {
+
+		console.log('Change play rate event');
+
+	} );
+	controllerPlayRate.domElement.title = 'Rate of changing of 3D obects per second.';
+
+	//PrevAndNextController
+	gui.add( new customcontrollers.PrevAndNextController( function () {
+
+		buttons = {},
+
+		//Go to previous object 3D button
+		buttons.buttonPrev = addButton( '←', 'Go to previous 3D object', function ( value ) {
+
+			console.log('Go to previous 3D object event');
+
+		} );
+
+		//Go to next object 3D button
+		buttons.buttonNext = addButton( '→', 'Go to next 3D object', function ( value ) {
+
+			console.log('Go to next 3D object event');
+
+		} );
+
+		return buttons;
 
 	} ) );
-
-	//Example of extension version of using of customcontrollers.PlayController.
-	//The NumberControllerSlider was added into customcontrollers.PlayController also.
-	// gui.add function returns NumberControllerSlider.
-	var controllerPlay = gui.add( new customcontrollers.PlayController(  function ( controller ) {
-
-			//Add your custom elements into controller.domElement
-
-	}  ),
-	{
-
-		playRate: 1,
-
-	}, 'playRate', 1, 25, 1 ).onChange( function ( value ) {
-
-		//User has changed the NumberControllerSlider value
-
-	} );
-	controllerPlay.domElement.title = 'Rate of changing of 3D obects per second.';
-
-	gui.add( new customcontrollers.KnobController( 1, 2 ) );
-
-	//Example of extension version of using of customcontrollers.KnobController.
-	//The NumberControllerSlider was added into customcontrollers.KnobController also.
-	// gui.add function returns NumberControllerSlider.
-	var controllerKnob = folder3.add( new customcontrollers.KnobController( 3, 4 ), {
-
-		playRate: 1,
-
-	}, 'playRate', 1, 25, 1 ).onChange( function ( value ) {
-
-		//User has changed the NumberControllerSlider value
-
-	} );
 
 ```
 
