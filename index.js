@@ -62,15 +62,19 @@ export class KnobController extends controllers.CustomController {
 }
 
 /**
- * @class Example of subtype of CustomController class.
  * Periodically changes the selected 3D object.
  * Adds NumberControllerSlider controller into PlayController for changing of the rate of changing of 3D obects per second.
+ * 
+ * @class Example of subtype of CustomController class.
  *
  * @extends dat.controllers.CustomController
  *
- * @param {Function} init Returns an object with elements for adding into "property-name" class element.
  */
 export class PlayController extends controllers.CustomController {
+	/**
+	 * 
+	 * @param {Function} init Returns an object with elements for adding into "property-name" class element.
+	 */
 	constructor( init ) {
 		super( {
 
@@ -84,14 +88,17 @@ export class PlayController extends controllers.CustomController {
 }
 
 /**
- * @class Example of subtype of CustomController class.
  * Selects previous or next 3D object
+ * @class Example of subtype of CustomController class.
  *
  * @extends dat.controllers.CustomController
  *
- * @param {Function} init Returns an object with elements for adding into "property-name" class element.
  */
 export class PrevAndNextController extends controllers.CustomController {
+	/**
+	 * 
+	 * @param {Function} init Returns an object with elements for adding into "property-name" class element.
+	 */
 	constructor( init ) {
 		super( {
 			property: init,
