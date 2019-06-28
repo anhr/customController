@@ -30,6 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Examples\html\webgl_custom_controller.html" />
     <Content Include="licenseBanner.txt" />
     <Content Include="package.json" />
     <Content Include="README.md" />
@@ -39,6 +40,10 @@
     <Compile Include="index.js" />
     <Compile Include="rollup.config.js" />
     <Compile Include="rollup.config.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Examples\" />
+    <Folder Include="Examples\html\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />

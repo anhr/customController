@@ -1511,9 +1511,18 @@ var CustomController = function (_Controller) {
     _this.arguments = {
       object: object, property: property, opts: Array.prototype.slice.call(arguments, 2)
     };
-    if (object.property) _this.property = object.property();
+    if (object.property) _this.property = object.property(_this);
     return _this;
   }
+  createClass$1(CustomController, [{
+    key: 'controller',
+    set: function set$$1(newController) {
+      this._controller = newController;
+    },
+    get: function get$$1() {
+      return this._controller;
+    }
+  }]);
   return CustomController;
 }(Controller);
 var css = {
@@ -2259,7 +2268,7 @@ function _add(gui, object, property, params) {
     var factoryArgs = [object, property].concat(params.factoryArgs);
     controller = ControllerFactory.apply(gui, factoryArgs);
   }
-  if (controller === null) controller = customObject;
+  if (controller === null) controller = customObject;else if (customObject !== undefined) customObject.controller = controller;
   if (params.before instanceof Controller) {
     params.before = params.before.__li;
   }

@@ -1,0 +1,12 @@
+test page
+https://raw.githack.com/anhr/three.js/dev/examples/webgl_custom_controller.html
+http://localhost/threejs/three.js/examples/webgl_custom_controller.html
+-------------------------------------------
+Building menu
+
+Open "Node.js command prompt"
+
+d:
+cd "D:\My documents\MyProjects\webgl\three.js\GitHub\customController\customController"
+npm install
+npm run build

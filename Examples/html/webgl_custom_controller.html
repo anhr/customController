@@ -1,0 +1,510 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - math</title>
+		<meta charset="utf-8">
+		<meta name="author" content="Andrej Hristoliubov https://anhr.github.io/AboutMe/">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				font-family: Monospace;
+				background-color: #f0f0f0;
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>
+
+		<script src="../build/three.js"></script>
+		<script src="js/WebGL.js"></script>
+		<script src="js/controls/OrbitControls.js"></script>
+
+		<!--A lightweight graphical user interface for changing variables in JavaScript. https://github.com/dataarts/dat.gui -->
+		<script src="js/libs/dat.gui.js"></script>
+		<!--<script src="js/libs/dat.gui.min.js"></script>-->
+		<!--<script src="../../dat.gui/build/dat.gui.js"></script>-->
+		<!--<script src="../../dat.gui/build/dat.gui.min.js"></script>-->
+
+		<!--<script src="../../customController/customController/build/customControllers.js"></script>-->
+		<script src="https://raw.githack.com/anhr/customController/master/build/customcontrollers.js"></script>
+
+		<!--<script src="js/effects/StereoEffect.js"></script>-->
+
+		<!--Cube-->
+		<script src="js/geometries/ConvexGeometry.js"></script>
+		<script src="js/QuickHull.js"></script>
+
+	</head>
+	<body>
+		<div id="container"></div>
+		<div id="info">
+			<a href="https://threejs.org" target="_blank" rel="noopener noreferrer">three.js</a> - custom controller
+			by <a href="https://github.com/anhr" target="_blank" rel="noopener">anhr</a>
+		</div>
+		<canvas id="canvas"></canvas>
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
+			}
+
+			var camera, scene, re, mesh, target, se, controls, cubeType = 'cube';
+			var buttons1 = {}, buttons2 = {}, buttons3 = {};
+
+			init();
+			animate();
+
+			function init() {
+
+				// CAMERA
+
+				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
+				camera.position.set( 0.4, 0.4, 2 );
+
+				// SCENE
+
+				scene = new THREE.Scene();
+				scene.background = new THREE.Color( 0x000000 );
+				scene.fog = new THREE.Fog( 0x000000, 250, 1400 );
+
+				//
+
+				re = new THREE.WebGLRenderer( {
+
+					antialias: true,
+					canvas: document.getElementById( 'canvas' ),
+
+				} );
+				re.setPixelRatio( window.devicePixelRatio );
+				re.setSize( window.innerWidth, window.innerHeight );//full screen
+				//re.setSize( window.innerWidth / 2, window.innerHeight / 2 );
+				document.body.appendChild( re.domElement );
+
+				//
+				controls = new THREE.OrbitControls( camera, re.domElement );
+				controls.target.set( 0, 0, 0 );
+				controls.update();
+				/*
+				//StereoEffect
+			
+				se = new THREE.StereoEffect( re, {
+			
+					spatialMultiplex: THREE.StereoEffectParameters.spatialMultiplexsIndexs.Mono, //.SbS,
+					far: camera.far,
+					camera: camera,
+					stereoAspect: 1,
+					rememberSize: true,
+			
+				} );
+				*/
+				//Light
+
+				var light = new THREE.PointLight( 0xffffff, 1 );
+				light.position.copy( new THREE.Vector3( 1, 1, 1 ) );
+				scene.add( light );
+
+				light = new THREE.PointLight( 0xffffff, 1 );
+				light.position.copy( new THREE.Vector3( -2, -2, -2 ) );
+				scene.add( light );
+
+				var group = new THREE.Group();
+				scene.add( group );
+
+				var points;
+				function addObjects() {
+
+					//Points
+
+					points = new THREE.Points( new THREE.BufferGeometry().setFromPoints( [
+						new THREE.Vector3( 0, 0, 0 ),
+						new THREE.Vector3( 0, 0.5, -1 ),
+						new THREE.Vector3( 0.5, 0, 1 ),
+					] ),
+					new THREE.PointsMaterial( {
+
+						color: 0xffffff,
+						size: 0.05,
+						alphaTest: 0.5
+
+					} ) );
+					points.position.copy( new THREE.Vector3( 0.1, 0.2, 0 ) );
+					points.scale.copy( new THREE.Vector3( 2, 2, 1 ) );
+					points.userData.color = points.material.color;
+					group.add( points );
+
+					//cubes
+
+					function addCube( cubePosition, color ) {
+
+						var cube = new THREE.Mesh( new THREE.ConvexBufferGeometry( new THREE.CubeGeometry( 0.4, 0.4, 0.4 ).vertices ),
+							new THREE.MeshLambertMaterial( {
+								color: color,
+								/*
+								opacity: 0.5,
+								transparent: true,
+								*/
+							} ) );
+						cube.position.copy( cubePosition );
+						cube.type = cubeType;
+						cube.userData.color = cube.material.color;
+						group.add( cube );
+
+					}
+					addCube( new THREE.Vector3( -1, 0, 0 ), 0xffffff );
+					addCube( new THREE.Vector3( -0.5, 0.5, -0.5 ), 'green' );
+
+				}
+				addObjects();
+
+				//dat-gui JavaScript Controller Library
+				//https://github.com/dataarts/dat.gui
+				var gui = new dat.GUI();
+
+				if ( se !== undefined )
+					THREE.gui.stereoEffect( gui, se.options, {
+
+						gui: gui,
+
+					} );
+
+				var selectObject3DIndex = -1;
+				var colorRed = new THREE.Color( 0xff0000 );
+				function RenamePlayButtons( innerHTML, title ) {
+
+					if ( buttons1.buttonPlay !== undefined ) {
+
+						buttons1.buttonPlay.innerHTML = innerHTML;
+						buttons1.buttonPlay.title = title;
+
+					}
+					if ( buttons2.buttonPlay !== undefined ) {
+
+						buttons2.buttonPlay.innerHTML = innerHTML;
+						buttons2.buttonPlay.title = title;
+
+					}
+					if ( buttons3.buttonPlay !== undefined ) {
+
+						buttons3.buttonPlay.innerHTML = innerHTML;
+						buttons3.buttonPlay.title = title;
+
+					}
+
+				}
+				function play() {
+
+					//red color of selected object3D and hide others
+					if ( ( selectObject3DIndex === -1 ) || ( selectObject3DIndex === group.children.length ) ) {
+
+						selectObject3DIndex = 0;
+
+					}
+					for ( var i = 0; i < group.children.length; i++ ) {
+
+						var objects3DItem = group.children[i];
+						if ( selectObject3DIndex === i ) {
+
+							objects3DItem.material.color = colorRed;
+							objects3DItem.visible = true;
+
+						} else {
+
+							objects3DItem.visible = false;//hide object3D
+
+						}
+
+					}
+					RenamePlayButtons( '❚❚', 'Pause' );
+
+				}
+				function pause() {
+
+					//Restore colors and visible
+					for ( var i = 0; i < group.children.length; i++ ) {
+
+						var objects3DItem = group.children[i];
+						objects3DItem.material.color = objects3DItem.userData.color;
+
+						objects3DItem.visible = true;
+
+					}
+
+					RenamePlayButtons( playSymbol, playTitle );
+
+					clearInterval( group.userData.timerId );
+					group.userData.timerId = undefined;
+
+				}
+				function isRepeat() {
+
+					return buttons3.buttonRepeat.title !== repeatOn;
+
+				}
+				function playNext() {
+
+					selectObject3DIndex++;
+					if ( selectObject3DIndex >= group.children.length ) {
+
+						if ( isRepeat() )
+							selectObject3DIndex = 0;
+						else {
+
+							pause();
+							return;
+
+						}
+
+					}
+					play();
+
+				}
+				group.userData.timerId;
+
+				function addButton( innerHTML, title, onclick ) {
+
+					var button = document.createElement( 'span' );
+					button.innerHTML = innerHTML;
+					button.title = title;
+					button.style.cursor = 'pointer';
+					button.style.margin = '0px 2px';
+					button.onclick = onclick;
+					return button;
+
+				}
+
+				var playSymbol = '►', playTitle = 'Play', repeatOn = 'Turn repeat on';
+
+				function controllerPrevAndNext() {
+
+					var buttons = {};
+					//Go to previous object 3D button
+					buttons.buttonPrev = addButton( '←', 'Go to previous object 3D', function ( value ) {
+
+						if ( selectObject3DIndex === -1 )
+							selectObject3DIndex = group.children.length;
+						var objects3DItem = group.children[selectObject3DIndex];
+						if ( objects3DItem !== undefined )
+							objects3DItem.material.color = objects3DItem.userData.color;
+						selectObject3DIndex--;
+						if ( selectObject3DIndex < 0 )
+							selectObject3DIndex = group.children.length - 1;
+						objects3DItem = group.children[selectObject3DIndex];
+						objects3DItem.material.color = colorRed;
+
+					} );
+					//Go to next object 3D button
+					buttons.buttonNext = addButton( '→', 'Go to next object 3D', function ( value ) {
+
+						var objects3DItem = group.children[selectObject3DIndex];
+						if ( objects3DItem !== undefined )
+							objects3DItem.material.color = objects3DItem.userData.color;
+						selectObject3DIndex++;
+						if ( selectObject3DIndex >= group.children.length )
+							selectObject3DIndex = 0;
+						objects3DItem = group.children[selectObject3DIndex];
+						objects3DItem.material.color = colorRed;
+
+					} );
+					return buttons;
+
+				}
+				function controllerPlay( buttons ) {
+
+					//Play/Pause button
+					buttons.buttonPlay = addButton( playSymbol, playTitle, function ( value ) {
+
+						if ( buttons.buttonPlay.innerHTML === playSymbol ) {
+
+							group.userData.timerId = -1;
+							play();
+							group.userData.timerId = setInterval( playNext, 1000 / controllerPlayRate.getValue() );
+
+						} else pause();
+
+					} );
+
+					//Repeat button
+					var colorGray = 'rgb(200,200,200)';
+					buttons.buttonRepeat = addButton( '⥀', repeatOn, function ( value ) {
+
+						function RenameRepeatButtons( title, color ) {
+
+							if ( buttons1.buttonRepeat !== undefined ) {
+
+
+								buttons1.buttonRepeat.title = title;
+								buttons1.buttonRepeat.style.color = color;
+
+							}
+							if ( buttons2.buttonRepeat !== undefined ) {
+
+								buttons2.buttonRepeat.title = title;
+								buttons2.buttonRepeat.style.color = color;
+
+							}
+							if ( buttons3.buttonRepeat !== undefined ) {
+
+								buttons3.buttonRepeat.title = title;
+								buttons3.buttonRepeat.style.color = color;
+
+							}
+
+						}
+						if ( buttons.buttonRepeat.title === repeatOn ) {
+
+							RenameRepeatButtons( 'Turn repeat off', 'rgb(255,255,255)' );
+
+						} else {
+
+							RenameRepeatButtons( repeatOn, colorGray );
+
+						}
+
+					} );
+					buttons.buttonRepeat.style.color = colorGray;
+
+				}
+				function onChangePlayRate( value ) {
+
+					if ( ( typeof controllerPlayRate !== 'undefined' ) && ( controllerPlayRate.getValue() !== value ) )
+						controllerPlayRate.setValue( value );
+					if ( ( typeof controllerPlayRate1 !== 'undefined' ) && ( controllerPlayRate1.getValue() !== value ) )
+						controllerPlayRate1.setValue( value );
+					if ( ( typeof controllerPlayRate2 !== 'undefined' ) && ( controllerPlayRate2.getValue() !== value ) )
+						controllerPlayRate2.setValue( value );
+					if ( ( typeof controllerPlayRate3 !== 'undefined' ) && ( controllerPlayRate3.getValue() !== value ) )
+						controllerPlayRate3.setValue( value );
+					if ( ( typeof controllerPlayRate4 !== 'undefined' ) && ( controllerPlayRate4.getValue() !== value ) )
+						controllerPlayRate4.setValue( value );
+
+					if ( group.userData.timerId === undefined )
+						return;
+
+					clearInterval( group.userData.timerId );
+					group.userData.timerId = setInterval( playNext, 1000 / value );
+
+				}
+
+				var folderCustomController = gui.addFolder( 'Use dat.controllers.CustomController' );
+				folderCustomController.open();
+
+				//PlayController
+				var controllerPlayRate1 = folderCustomController.add( new dat.controllers.CustomController( {
+
+					playRate: 1,
+					property: function () {
+
+						controllerPlay( buttons1 );
+						return buttons1;
+
+					},
+
+				}, 'playRate', 1, 25, 1 ) ).onChange( function ( value ) {
+
+					onChangePlayRate( value );
+
+				} );
+				controllerPlayRate1.domElement.title = 'Rate of changing of 3D obects per second.';
+
+				//PrevAndNextController
+				folderCustomController.add( new dat.controllers.CustomController( {
+
+					property: function () {
+
+						return controllerPrevAndNext();
+
+					},
+
+				} ) );
+
+				var folderES = gui.addFolder( 'Use ES module' );
+				folderES.open();
+
+				const api = {
+
+					color: '#ffffff',
+					value: 0.5,
+
+				};
+
+				gui.add( api, 'color' );
+
+				//KnobController
+				var folderKnobController = folderES.addFolder( 'KnobController' );
+				folderKnobController.open();
+				folderKnobController.add( new customcontrollers.KnobController( api, 'value', 0.5, 25 ) );
+
+				//PlayController
+				var controllerPlayRate3 = folderES.add( new customcontrollers.PlayController( function () {
+
+					controllerPlay( buttons3 );
+					return buttons3;
+
+				} ) ).onChange( function ( value ) {
+
+					onChangePlayRate( value );
+
+				} );
+				controllerPlayRate3.domElement.title = 'Rate of changing of 3D obects per second.';
+
+				//PrevAndNextController
+				var controllerPrevAndNextES = folderES.add( new customcontrollers.PrevAndNextController( function () {
+
+					return controllerPrevAndNext();
+
+				} ) );
+
+				gui.addColor( { 'Points Color': 'rgba(255, 255, 255, 1)' }, 'Points Color' ).onChange( function ( value ) {
+
+					points.material.color = new THREE.Color( value );
+					console.log( 'color: ' + value );
+
+				} );
+
+				var controllerPlayRate = gui.add( {
+
+					'Play Rate': 1,
+
+				}, 'Play Rate', 1, 25, 1 ).onChange( function ( value ) {
+
+					onChangePlayRate( value );
+
+				}
+
+				);
+
+				window.addEventListener( 'resize', onResize, false );
+
+			}
+			function onResize() {
+
+				var size = new THREE.Vector2();
+				re.getSize( size );
+				camera.aspect = size.x / size.y;
+				camera.updateProjectionMatrix();
+
+				if ( typeof se === 'undefined' )
+					re.setSize( size.x, size.y );
+				else
+					se.setSize( size.x, size.y );
+
+			}
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+
+			}
+
+			function render() {
+
+				if ( typeof se === 'undefined' )
+					re.render( scene, camera );
+				else se.render( scene, camera );
+
+			}
+		</script>
+	</body>
+</html>

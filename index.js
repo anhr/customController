@@ -15,16 +15,21 @@
 import { GUI, controllers } from '../../dat.gui';
 
 /**
- * @class Example of subtype of CustomController class.
+ * Example of subtype of CustomController class.
+ * 
+ * @class KnobController
  *
  * @extends dat.controllers.CustomController
  *
- * @param {Object} object The object to be manipulated
- * @param {string} property The name of the property to be manipulated
- * @param {number} a
- * @param {number} b
  */
 export class KnobController extends controllers.CustomController {
+	/**
+	 * Create a KnobController.
+	 * @param {Object} object The object to be manipulated
+	 * @param {string} property The name of the property to be manipulated
+	 * @param {number} a first parameter
+	 * @param {number} b second parameter
+	 */
 	constructor( object, property, a, b ) {
 		super( object, property );
 
