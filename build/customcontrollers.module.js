@@ -10,12 +10,6 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.customcontrollers = {})));
-}(this, (function (exports) { 'use strict';
-
 class KnobController extends controllers.CustomController {
 	constructor(object, property, a, b) {
 		super(object, property);
@@ -57,11 +51,5 @@ class PrevAndNextController extends controllers.CustomController {
 	}
 }
 
-exports.KnobController = KnobController;
-exports.PlayController = PlayController;
-exports.PrevAndNextController = PrevAndNextController;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-//# sourceMappingURL=customcontrollers.js.map
+export { KnobController, PlayController, PrevAndNextController };
+//# sourceMappingURL=customcontrollers.module.js.map

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title>three.js webgl - math</title>
@@ -14,13 +14,13 @@
 			}
 		</style>
 
-		<script src="../build/three.js"></script>
-		<script src="js/WebGL.js"></script>
-		<script src="js/controls/OrbitControls.js"></script>
+		<!--<script src="../build/three.js"></script>-->
+		<!--<script src="js/WebGL.js"></script>-->
+		<!--<script src="js/controls/OrbitControls.js"></script>-->
 
 		<!--A lightweight graphical user interface for changing variables in JavaScript. https://github.com/dataarts/dat.gui -->
-		<script src="js/libs/dat.gui.js"></script>
-		<!--<script src="js/libs/dat.gui.min.js"></script>-->
+		<!--<script src="js/libs/dat.gui.js"></script>-->
+		<script src="js/libs/dat.gui.min.js"></script>
 		<!--<script src="../../dat.gui/build/dat.gui.js"></script>-->
 		<!--<script src="../../dat.gui/build/dat.gui.min.js"></script>-->
 
@@ -30,8 +30,8 @@
 		<!--<script src="js/effects/StereoEffect.js"></script>-->
 
 		<!--Cube-->
-		<script src="js/geometries/ConvexGeometry.js"></script>
-		<script src="js/QuickHull.js"></script>
+		<!--<script src="js/geometries/ConvexGeometry.js"></script>-->
+		<!--<script src="js/QuickHull.js"></script>-->
 
 	</head>
 	<body>
@@ -41,7 +41,14 @@
 			by <a href="https://github.com/anhr" target="_blank" rel="noopener">anhr</a>
 		</div>
 		<canvas id="canvas"></canvas>
-		<script>
+		<script type="module">
+
+			import * as THREE from '../build/three.module.js';
+			import { OrbitControls } from './jsm/controls/OrbitControls.js';
+			import { ConvexBufferGeometry } from './jsm/geometries/ConvexGeometry.js';
+
+			//import { WEBGL } from './jsm/WEBGL.js';
+			import { WEBGL } from 'https://raw.githack.com/anhr/three.js/dev/examples/jsm/WebGL.js';
 
 			if ( WEBGL.isWebGLAvailable() === false ) {
 
@@ -82,7 +89,7 @@
 				document.body.appendChild( re.domElement );
 
 				//
-				controls = new THREE.OrbitControls( camera, re.domElement );
+				controls = new OrbitControls( camera, re.domElement );
 				controls.target.set( 0, 0, 0 );
 				controls.update();
 				/*
@@ -137,7 +144,7 @@
 
 					function addCube( cubePosition, color ) {
 
-						var cube = new THREE.Mesh( new THREE.ConvexBufferGeometry( new THREE.CubeGeometry( 0.4, 0.4, 0.4 ).vertices ),
+						var cube = new THREE.Mesh( new ConvexBufferGeometry( new THREE.CubeGeometry( 0.4, 0.4, 0.4 ).vertices ),
 							new THREE.MeshLambertMaterial( {
 								color: color,
 								/*

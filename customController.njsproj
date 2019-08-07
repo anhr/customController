@@ -30,7 +30,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="Examples\html\webgl_custom_controller.html" />
+    <Content Include="Examples\webgl_custom_controller.html" />
     <Content Include="licenseBanner.txt" />
     <Content Include="package.json" />
     <Content Include="README.md" />

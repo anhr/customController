@@ -12,7 +12,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
-import { GUI, controllers } from '../../dat.gui';
+//import { GUI, controllers } from '../../dat.gui';
 
 /**
  * Example of subtype of CustomController class.
