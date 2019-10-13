@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 	<head>
 		<title>three.js webgl - math</title>
@@ -20,12 +20,13 @@
 
 		<!--A lightweight graphical user interface for changing variables in JavaScript. https://github.com/dataarts/dat.gui -->
 		<!--<script src="js/libs/dat.gui.js"></script>-->
-		<script src="js/libs/dat.gui.min.js"></script>
-		<!--<script src="../../dat.gui/build/dat.gui.js"></script>-->
+		<!--<script src="js/libs/dat.gui.min.js"></script>-->
+		<script src="../../../dat.gui/build/dat.gui.js"></script>
 		<!--<script src="../../dat.gui/build/dat.gui.min.js"></script>-->
 
 		<!--<script src="../../customController/customController/build/customControllers.js"></script>-->
-		<script src="https://raw.githack.com/anhr/customController/master/build/customcontrollers.js"></script>
+		<!--<script src="../build/customControllers.js"></script>-->
+		<!--<script src="https://raw.githack.com/anhr/customController/master/build/customcontrollers.js"></script>-->
 
 		<!--<script src="js/effects/StereoEffect.js"></script>-->
 
@@ -43,9 +44,10 @@
 		<canvas id="canvas"></canvas>
 		<script type="module">
 
-			import * as THREE from '../build/three.module.js';
-			import { OrbitControls } from './jsm/controls/OrbitControls.js';
-			import { ConvexBufferGeometry } from './jsm/geometries/ConvexGeometry.js';
+			import * as THREE from '../../../three.js/build/three.module.js';
+			import { OrbitControls } from '../../../three.js/examples/jsm/controls/OrbitControls.js';
+			import { ConvexBufferGeometry } from '../../../three.js/examples/jsm/geometries/ConvexGeometry.js';
+			import customcontrollers from '../customControllers.js';
 
 			//import { WEBGL } from './jsm/WEBGL.js';
 			import { WEBGL } from 'https://raw.githack.com/anhr/three.js/dev/examples/jsm/WebGL.js';
@@ -412,7 +414,7 @@
 					onChangePlayRate( value );
 
 				} );
-				controllerPlayRate1.domElement.title = 'Rate of changing of 3D obects per second.';
+				controllerPlayRate1.domElement.title = 'Rate of changing of 3D objects per second.';
 
 				//PrevAndNextController
 				folderCustomController.add( new dat.controllers.CustomController( {
@@ -453,7 +455,7 @@
 					onChangePlayRate( value );
 
 				} );
-				controllerPlayRate3.domElement.title = 'Rate of changing of 3D obects per second.';
+				controllerPlayRate3.domElement.title = 'Rate of changing of 3D objects per second.';
 
 				//PrevAndNextController
 				var controllerPrevAndNextES = folderES.add( new customcontrollers.PrevAndNextController( function () {

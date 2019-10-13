@@ -30,6 +30,9 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="customControllers.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Examples\webgl_custom_controller.html" />
     <Content Include="licenseBanner.txt" />
     <Content Include="package.json" />
