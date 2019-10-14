@@ -12,8 +12,7 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  */
 
-//import { GUI, controllers } from '../../dat.gui';
-import { GUI, controllers } from '../../dat.gui/build/dat.gui.module.js';
+import { GUI, controllers } from '../../dat.gui/master/build/dat.gui.module.js';
 
 /**
  * Example of subtype of CustomController class.
