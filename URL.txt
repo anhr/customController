@@ -1,6 +1,9 @@
 test page
+https://raw.githack.com/anhr/customController/customController/examples/webgl_custom_controller.html
+       http://localhost/anhr/customController/customController/examples/webgl_custom_controller.html
+
 https://raw.githack.com/anhr/three.js/dev/examples/webgl_custom_controller.html
-http://localhost/threejs/three.js/examples/webgl_custom_controller.html
+       http://localhost/anhr/three.js/dev/examples/webgl_custom_controller.html
 -------------------------------------------
 Building menu
 
